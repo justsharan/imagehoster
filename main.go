@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"log"
 	"net/http"
 	"os"
 
@@ -13,6 +14,13 @@ var (
 	port = flag.String("p", "4000", "Port that the app listens to")
 	dir  = flag.String("dir", "./uploads/", "Directory to store images in")
 )
+
+func init() {
+	if key == "" {
+		key = randString(10)
+	}
+	log.Printf("No key was specified... using [%s]. This is not recommended.", key)
+}
 
 func main() {
 	r := mux.NewRouter()
