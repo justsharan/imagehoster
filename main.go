@@ -18,8 +18,8 @@ var (
 func init() {
 	if key == "" {
 		key = randString(10)
+		log.Printf("No key was specified... using [%s]. This is not recommended.", key)
 	}
-	log.Printf("No key was specified... using [%s]. This is not recommended.", key)
 }
 
 func main() {
@@ -34,5 +34,6 @@ func main() {
 	r.HandleFunc("/{image}", http.FileServer(http.Dir(*dir)).ServeHTTP).
 		Methods(http.MethodGet)
 
+	log.Println("Listening on port " + *port)
 	http.ListenAndServe(":"+*port, r)
 }
