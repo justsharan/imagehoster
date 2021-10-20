@@ -25,6 +25,11 @@ func init() {
 func main() {
 	r := mux.NewRouter()
 
+	// Handle new uploads
+	r.HandleFunc("/upload", handleUpload).
+		Methods(http.MethodPost).
+		Headers("Authorization", key)
+
 	// Serve pre-existing images
 	r.HandleFunc("/{image}", http.FileServer(http.Dir(*dir)).ServeHTTP).
 		Methods(http.MethodGet)
